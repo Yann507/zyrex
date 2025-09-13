@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>iPhone Quoted Generator</title>
+  <style>
+    body {
+      margin: 0;
+      height: 100vh;
+      background: #000;
+      color: #fff;
+      font-family: Arial, sans-serif;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
+    }
+
+    #particles-js {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+    }
+
+    .login-container, .main-container {
+      background: rgba(0, 0, 0, 0.7);
+      padding: 25px;
+      border-radius: 15px;
+      box-shadow: 0 0 20px rgba(0, 191, 255, 0.7);
+      text-align: center;
+      width: 80%;
+      max-width: 400px;
+      animation: fadeIn 0.8s ease;
+    }
+
+    h1 {
+      font-size: 26px;
+      font-weight: bold;
+      color: #00bfff;
+      text-shadow: 0 0 10px #00bfff, 0 0 20px #00bfff;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 90%;
+      padding: 10px;
+      border-radius: 10px;
+      border: none;
+      outline: none;
+      margin-bottom: 15px;
+      font-size: 16px;
+      text-align: center;
+    }
+
+    button {
+      background: linear-gradient(90deg, #007bff, #00bfff);
+      color: #fff;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 25px;
+      cursor: pointer;
+      font-size: 16px;
+      box-shadow: 0 0 15px rgba(0, 191, 255, 0.8);
+      transition: transform 0.2s;
+    }
+
+    button:hover {
+      transform: scale(1.05);
+    }
+
+    .success {
+      margin-top: 15px;
+      color: #00ffcc;
+      font-weight: bold;
+      text-shadow: 0 0 10px #00ffcc;
+      display: none;
+    }
+
+    .watermark {
+      position: fixed;
+      bottom: 10px;
+      font-size: 14px;
+      color: rgba(255, 255, 255, 0.7);
+      text-shadow: 0 0 5px #00bfff;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: scale(0.9); }
+      to { opacity: 1; transform: scale(1); }
+    }
+    @keyframes slideUp {
+      from { opacity: 0; transform: translateY(30px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .slide-up {
+      animation: slideUp 0.8s ease forwards;
+    }
+  </style>
+</head>
+<body>
+  <!-- Partikel -->
+  <div id="particles-js"></div>
+
+  <!-- Halaman Login -->
+  <div class="login-container" id="loginBox">
+    <h1>Login</h1>
+    <input type="text" id="username" placeholder="Username"><br>
+    <input type="password" id="password" placeholder="Password"><br>
+    <button onclick="login()">Masuk</button>
+    <p class="success" id="loginError" style="color:red; text-shadow:none;">❌ Username atau Password salah!</p>
+  </div>
+
+  <!-- Halaman Utama (disembunyikan dulu) -->
+  <div class="main-container" id="mainBox" style="display: none;">
+    <h1>Crasher WhatsApp</h1>
+    <input type="text" placeholder="Enter your target number...">
+    <button onclick="showSuccess()">🚀 Kirim</button>
+    <p class="success" id="successMsg">✅ Success!</p>
+  </div>
+
+  <!-- Watermark -->
+  <div class="watermark">Telegram : @TheZyrex</div>
+
+  <!-- Particles.js -->
+  <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
+  <script>
+    // Partikel biru
+    particlesJS("particles-js", {
+      particles: {
+        number: { value: 150 },
+        color: { value: "#00bfff" },
+        shape: { type: "circle" },
+        opacity: { value: 0.6 },
+        size: { value: 3 },
+        line_linked: {
+          enable: true,
+          distance: 120,
+          color: "#00bfff",
+          opacity: 0.5,
+          width: 1
+        },
+        move: { enable: true, speed: 2 }
+      }
+    });
+
+    // Fungsi login
+    function login() {
+      const user = document.getElementById("username").value;
+      const pass = document.getElementById("password").value;
+      const errorMsg = document.getElementById("loginError");
+      if (user === "zyrex" && pass === "777") {
+        document.getElementById("loginBox").style.display = "none";
+        const mainBox = document.getElementById("mainBox");
+        mainBox.style.display = "block";
+        mainBox.classList.add("slide-up"); // animasi keren
+      } else {
+        errorMsg.style.display = "block";
+      }
+    }
+
+    // Fungsi sukses
+    function showSuccess() {
+      document.getElementById("successMsg").style.display = "block";
+    }
+  </script>
+</body>
+</html>
