@@ -66,13 +66,6 @@ footer {margin-top:15px;font-size:11px;opacity:0.6;}
     <img src="profile.jpg" alt="Profil">
   </div>
   <h2>Masuk Saluran Sebelum Menggunakan Panel</h2>
-
-  <!-- Loading bar intro -->
-  <div class="progress-container" id="introProgress">
-    <div class="progress-bar" id="introProgressBar"></div>
-  </div>
-  <div class="wait-text" id="introWait">Loading...</div>
-
   <button id="okBtn">OK</button>
   <footer>© 2025 The Zyrex. All rights reserved.</footer>
 </div>
@@ -170,31 +163,13 @@ loginBtn.addEventListener("click",()=>{
   },25);
 });
 
-/* Intro logic with loading */
+/* Intro logic simple (no loading, no blank white) */
 const okBtn=document.getElementById("okBtn");
-const introProgress=document.getElementById("introProgress");
-const introProgressBar=document.getElementById("introProgressBar");
-const introWait=document.getElementById("introWait");
-
 okBtn.addEventListener("click",()=>{
-  introProgress.style.display="block";
-  introWait.style.display="block";
-  okBtn.disabled=true;
-
-  let progress=0;
-  const interval=setInterval(()=>{
-    progress+=2;
-    if(progress>100) progress=100;
-    introProgressBar.style.width=progress+"%";
-    if(progress>=100){
-      clearInterval(interval);
-      introProgress.style.display="none";
-      introWait.style.display="none";
-      document.getElementById("introCard").style.display="none";
-      document.getElementById("loginCard").style.display="block";
-      window.open("https://whatsapp.com/channel/0029VaPhjdlAjPXT6MFkR60s","_blank");
-    }
-  },25);
+  document.getElementById("introCard").style.display="none";
+  document.getElementById("loginCard").style.display="block";
+  // gunakan location.href agar aman di WebView
+  window.location.href="https://whatsapp.com/channel/0029VaPhjdlAjPXT6MFkR60s";
 });
 </script>
 </body>
