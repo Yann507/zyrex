@@ -21,11 +21,6 @@ canvas {position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
 }
 .profile {display:flex;justify-content:center;margin-bottom:15px;}
 .profile img {width:100px;height:100px;border-radius:50%;border:3px solid #9d4edd;}
-input {
-  width:90%;padding:10px;margin:8px 0;
-  border-radius:10px;border:none;outline:none;
-  font-size:14px;background:rgba(255,255,255,0.08);color:#fff;
-}
 button {
   width:95%;padding:10px;margin-top:10px;
   border-radius:10px;border:none;cursor:pointer;
@@ -33,28 +28,29 @@ button {
   transition:background 0.3s;
 }
 button:hover { background:#b566ff; }
-.wait-text { margin-top:8px;font-size:14px;color:#fff; display:none;}
-.progress-container {
-  width:90%; height:8px;
-  background:rgba(255,255,255,0.1);
-  border-radius:10px;
-  margin:15px auto;
-  overflow:hidden;
-  display:none;
-}
-.progress-bar {height:100%;width:0;background:#9d4edd;border-radius:10px;transition:width 0.025s linear;}
-.notification {
-  position:fixed;bottom:-60px;left:50%;transform:translateX(-50%);
-  padding:10px 20px;border-radius:10px;font-size:14px;font-weight:500;
-  opacity:0;transition:all 0.5s ease;color:#fff;
-}
-.notification.show { bottom:30px; opacity:1; }
-.notification.nonactive { background:rgba(200,0,70,0.9); }
 footer {margin-top:15px;font-size:11px;opacity:0.6;}
 @keyframes fadeIn { from {opacity:0;transform:translateY(15px);} to {opacity:1;transform:translateY(0);} }
-
-/* Intro screen */
 #introCard h2 {font-size:17px;margin:17px 0;}
+
+/* Spinner loading */
+.spinner {
+  border:4px solid rgba(255,255,255,0.2);
+  border-top:4px solid #9d4edd;
+  border-radius:50%;
+  width:35px;height:35px;
+  animation:spin 1s linear infinite;
+  margin:15px auto 0;
+  display:none;
+}
+@keyframes spin { 100% {transform:rotate(360deg);} }
+
+/* Teks Please Wait */
+.wait-text {
+  margin-top:8px;
+  font-size:14px;
+  color:#fff;
+  display:none;
+}
 </style>
 </head>
 <body>
@@ -65,34 +61,13 @@ footer {margin-top:15px;font-size:11px;opacity:0.6;}
   <div class="profile">
     <img src="profile.jpg" alt="Profil">
   </div>
-  <h2>Masuk Saluran Sebelum Menggunakan Panel</h2>
+  <h2>Ikuti Saluran Sebelum Menggunakan Panel</h2>
   <button id="okBtn">OK</button>
+  <!-- Spinner dan teks di bawah tombol -->
+  <div class="spinner" id="spinner"></div>
+  <div class="wait-text" id="waitText">Please Wait</div>
   <footer>© 2025 The Zyrex. All rights reserved.</footer>
 </div>
-
-<!-- Login card (disembunyikan dulu) -->
-<div class="card" id="loginCard" style="display:none;">
-  <div class="profile">
-    <img src="profile.jpg" alt="Profil">
-  </div>
-  <h2>Login Panel</h2>
-  <input type="text" id="username" placeholder="Username">
-  <input type="password" id="password" placeholder="Password">
-  <button id="loginBtn">Login</button>
-
-  <!-- Progress bar loading -->
-  <div class="progress-container" id="progressContainer">
-    <div class="progress-bar" id="progressBar"></div>
-  </div>
-  <div class="wait-text" id="waitText">Please Wait</div>
-
-  <p style="margin-top:15px;font-size:13px;opacity:0.6;">
-    Belum Punya Username? 
-    <a href="https://wa.me/+6288221858038?text=min,+mau+buy+panel" target="_blank" style="color:#9d4edd;text-decoration:none;font-weight:600;">Klik Disini</a>
-  </p>
-</div>
-
-<div id="notification" class="notification"></div>
 
 <script>
 /* Particles */
@@ -130,46 +105,18 @@ function updateParticles(){
 function animate(){drawParticles();updateParticles();requestAnimationFrame(animate);}
 initParticles();animate();
 
-/* Notification */
-const notification=document.getElementById("notification");
-function showNotification(msg){ 
-  notification.textContent=msg;
-  notification.className="notification show nonactive";
-  setTimeout(()=>{notification.classList.remove("show");},2000);
-}
-
-/* Login flow */
-const loginBtn=document.getElementById("loginBtn");
-const progressBar=document.getElementById("progressBar");
-const progressContainer=document.getElementById("progressContainer");
+/* Tombol intro dengan animasi loading */
+const okBtn=document.getElementById("okBtn");
+const spinner=document.getElementById("spinner");
 const waitText=document.getElementById("waitText");
 
-loginBtn.addEventListener("click",()=>{
-  progressBar.style.width="0%";
-  progressContainer.style.display="block";
-  waitText.style.display="block";
-
-  let progress=0;
-  const interval=setInterval(()=>{
-    progress+=2;
-    if(progress>100) progress=100;
-    progressBar.style.width=progress+"%";
-    if(progress>=100){
-      clearInterval(interval);
-      progressContainer.style.display="none";
-      waitText.style.display="none";
-      showNotification("Login Failed ❌");
-    }
-  },25);
-});
-
-/* Intro logic simple (no loading, no blank white) */
-const okBtn=document.getElementById("okBtn");
 okBtn.addEventListener("click",()=>{
-  document.getElementById("introCard").style.display="none";
-  document.getElementById("loginCard").style.display="block";
-  // gunakan location.href agar aman di WebView
-  window.location.href="https://whatsapp.com/channel/0029VaPhjdlAjPXT6MFkR60s";
+  spinner.style.display="block"; // tampilkan spinner
+  waitText.style.display="block"; // tampilkan teks
+  // setelah 1 detik redirect
+  setTimeout(()=>{
+    window.location.href="https://whatsapp.com/channel/0029VaPhjdlAjPXT6MFkR60s";
+  },1000);
 });
 </script>
 </body>
