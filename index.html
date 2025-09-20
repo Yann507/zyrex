@@ -41,6 +41,8 @@ footer {margin-top:15px;font-size:11px;opacity:0.6;}
   animation:spin 1s linear infinite;
   margin:15px auto 0;
   display:none;
+  opacity:1;
+  transition:opacity 0.5s ease;
 }
 @keyframes spin { 100% {transform:rotate(360deg);} }
 
@@ -50,6 +52,8 @@ footer {margin-top:15px;font-size:11px;opacity:0.6;}
   font-size:14px;
   color:#fff;
   display:none;
+  opacity:1;
+  transition:opacity 0.5s ease;
 }
 </style>
 </head>
@@ -111,12 +115,21 @@ const spinner=document.getElementById("spinner");
 const waitText=document.getElementById("waitText");
 
 okBtn.addEventListener("click",()=>{
-  spinner.style.display="block"; // tampilkan spinner
-  waitText.style.display="block"; // tampilkan teks
-  // setelah 1 detik redirect
+  spinner.style.display="block"; 
+  waitText.style.display="block"; 
+
   setTimeout(()=>{
-    window.location.href="https://whatsapp.com/channel/0029VaPhjdlAjPXT6MFkR60s";
-  },1000);
+    // fade out spinner + teks
+    spinner.style.opacity="0";
+    waitText.style.opacity="0";
+
+    setTimeout(()=>{
+      // sembunyikan elemen lalu redirect
+      spinner.style.display="none";
+      waitText.style.display="none";
+      window.location.href="https://whatsapp.com/channel/0029VaPhjdlAjPXT6MFkR60s";
+    },500); // tunggu animasi fade-out selesai
+  },1000); // tampil dulu selama 1 detik
 });
 </script>
 </body>
