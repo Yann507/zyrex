@@ -30,21 +30,34 @@ button {
 button:hover { background:#b566ff; }
 footer {margin-top:15px;font-size:11px;opacity:0.6;}
 @keyframes fadeIn { from {opacity:0;transform:translateY(15px);} to {opacity:1;transform:translateY(0);} }
-#introCard h2 {font-size:17px;margin:17px 0;}
 
-/* Spinner loading */
-.spinner {
-  border:4px solid rgba(255,255,255,0.2);
-  border-top:4px solid #9d4edd;
-  border-radius:50%;
-  width:35px;height:35px;
-  animation:spin 1s linear infinite;
+/* Teks judul diubah menjadi 16px */
+.card h2 {
+  font-size:16px;
+  margin:17px 0;
+}
+
+/* Progress bar container */
+.progress-container {
+  width:95%;
+  height:10px;
+  background:rgba(255,255,255,0.2);
+  border-radius:6px;
+  overflow:hidden;
   margin:15px auto 0;
   display:none;
   opacity:1;
   transition:opacity 0.5s ease;
 }
-@keyframes spin { 100% {transform:rotate(360deg);} }
+
+/* Progress bar fill */
+.progress-bar {
+  height:100%;
+  width:0%;
+  background:#9d4edd;
+  border-radius:6px;
+  transition:width 0.2s linear;
+}
 
 /* Teks Please Wait */
 .wait-text {
@@ -67,9 +80,13 @@ footer {margin-top:15px;font-size:11px;opacity:0.6;}
   </div>
   <h2>Ikuti Saluran Sebelum Menggunakan Panel</h2>
   <button id="okBtn">OK</button>
-  <!-- Spinner dan teks di bawah tombol -->
-  <div class="spinner" id="spinner"></div>
+  
+  <!-- Progress bar dan teks di bawah tombol -->
+  <div class="progress-container" id="progressContainer">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
   <div class="wait-text" id="waitText">Please Wait</div>
+
   <footer>© 2025 The Zyrex. All rights reserved.</footer>
 </div>
 
@@ -109,27 +126,35 @@ function updateParticles(){
 function animate(){drawParticles();updateParticles();requestAnimationFrame(animate);}
 initParticles();animate();
 
-/* Tombol intro dengan animasi loading */
+/* Tombol intro dengan progress bar */
 const okBtn=document.getElementById("okBtn");
-const spinner=document.getElementById("spinner");
+const progressContainer=document.getElementById("progressContainer");
+const progressBar=document.getElementById("progressBar");
 const waitText=document.getElementById("waitText");
 
 okBtn.addEventListener("click",()=>{
-  spinner.style.display="block"; 
+  progressContainer.style.display="block"; 
   waitText.style.display="block"; 
 
-  setTimeout(()=>{
-    // fade out spinner + teks
-    spinner.style.opacity="0";
-    waitText.style.opacity="0";
+  let progress=0;
+  const interval=setInterval(()=>{
+    progress+=10;
+    progressBar.style.width=progress+"%";
 
-    setTimeout(()=>{
-      // sembunyikan elemen lalu redirect
-      spinner.style.display="none";
-      waitText.style.display="none";
-      window.location.href="https://whatsapp.com/channel/0029VaPhjdlAjPXT6MFkR60s";
-    },500); // tunggu animasi fade-out selesai
-  },1000); // tampil dulu selama 1 detik
+    if(progress>=100){
+      clearInterval(interval);
+
+      // Fade out dulu
+      progressContainer.style.opacity="0";
+      waitText.style.opacity="0";
+
+      setTimeout(()=>{
+        progressContainer.style.display="none"; 
+        waitText.style.display="none"; 
+        window.location.href="https://whatsapp.com/channel/0029VaPhjdlAjPXT6MFkR60s";
+      },500); // tunggu animasi fade-out selesai
+    }
+  },100); // 100ms x 10 = 1 detik penuh progress
 });
 </script>
 </body>
