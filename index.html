@@ -13,7 +13,7 @@ body {
 }
 canvas {position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
 .card {
-  background:rgba(157,78,221,0.2); /* transparan ungu */
+  background:rgba(157,78,221,0.2);
   border-radius:12px;
   padding:25px;
   box-shadow:0 4px 25px rgba(0,0,0,0.5);
@@ -23,93 +23,54 @@ canvas {position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
 .card img.icon {
   width:80px;
   margin-bottom:15px;
-  border-radius:50%; /* biar bulat profil */
+  border-radius:50%;
   border:2px solid #9d4edd;
 }
-h2 {
-  font-size:18px;
-  margin:10px 0 20px;
-}
+h2 {font-size:18px;margin:10px 0 20px;}
 .btn {
-  width:100%;
-  padding:12px;
-  border:none;
-  border-radius:6px;
-  font-size:15px;
-  font-weight:600;
-  margin-top:10px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
+  width:100%;padding:12px;border:none;border-radius:6px;
+  font-size:15px;font-weight:600;margin-top:10px;
+  cursor:pointer;display:flex;align-items:center;justify-content:center;gap:8px;
   transition:0.3s;
 }
-.btn i {
-  font-size:18px;
-}
-.btn-red {
-  background:#ff0000;
-  color:#fff;
-}
+.btn svg {width:18px;height:18px;fill:#fff;}
+.btn-red {background:#ff0000;color:#fff;}
 .btn-red:hover {background:#e60000;}
-.btn-green {
-  background:#25d366;
-  color:#fff;
-}
+.btn-green {background:#25d366;color:#fff;}
 .btn-green:hover {background:#1ebe57;}
-.btn-purple {
-  background:#9d4edd;
-  color:#fff;
-}
-.btn-disabled {
-  background:#555 !important;
-  color:#999 !important;
-  cursor:not-allowed !important;
-}
-.btn.done {
-  background:green !important;
-}
-.progress-info {
-  margin:15px 0 5px;
-  font-size:13px;
-  opacity:0.9;
-}
-.progress-bar {
-  width:100%;
-  height:6px;
-  background:#333;
-  border-radius:3px;
-  overflow:hidden;
-}
-.progress-fill {
-  height:100%;
-  width:0%;
-  background:#9d4edd;
-  transition:width 0.3s;
-}
-@keyframes fadeIn { from {opacity:0;transform:translateY(15px);} to {opacity:1;transform:translateY(0);} }
+.btn-purple {background:#9d4edd;color:#fff;}
+.btn-disabled {background:#555 !important;color:#999 !important;cursor:not-allowed !important;}
+.btn.done {background:green !important;}
+.progress-info {margin:15px 0 5px;font-size:13px;opacity:0.9;}
+.progress-bar {width:100%;height:6px;background:#333;border-radius:3px;overflow:hidden;}
+.progress-fill {height:100%;width:0%;background:#9d4edd;transition:width 0.3s;}
+@keyframes fadeIn {from{opacity:0;transform:translateY(15px);}to{opacity:1;transform:translateY(0);}}
 footer {margin-top:15px;font-size:11px;opacity:0.6;}
 </style>
-<script src="https://kit.fontawesome.com/3f48d10a3b.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <canvas id="particles"></canvas>
 
 <div class="card">
-  <!-- Foto profil lokal -->
   <img src="profile.jpg" alt="profil" class="icon">
   <h2>Lengkapi Perintah Untuk Menggunakan Panel</h2>
 
   <!-- Tombol -->
-  <button id="subBtn" class="btn btn-red"><i class="fab fa-youtube"></i> Subscribe Youtube</button>
-  <button id="followBtn" class="btn btn-green"><i class="fab fa-whatsapp"></i> Ikuti Saluran</button>
+  <button id="subBtn" class="btn btn-red">
+    <!-- YouTube SVG -->
+    <svg viewBox="0 0 24 24"><path d="M23.5 6.2s-.2-1.6-.8-2.3c-.8-.9-1.7-.9-2.1-1-3-.2-7.5-.2-7.5-.2s-4.5 0-7.5.2c-.5 0-1.4 0-2.1 1-.6.7-.8 2.3-.8 2.3S2.5 8.1 2.5 10v1.9c0 1.9.2 3.8.2 3.8s.2 1.6.8 2.3c.8.9 1.9.9 2.4 1 1.7.2 7.1.2 7.1.2s4.5 0 7.5-.2c.5 0 1.4 0 2.1-1 .6-.7.8-2.3.8-2.3s.2-1.9.2-3.8V10c0-1.9-.2-3.8-.2-3.8zM9.8 13.6V8.8l5.1 2.4-5.1 2.4z"/></svg>
+    Subscribe Youtube
+  </button>
+
+  <button id="followBtn" class="btn btn-green">
+    <!-- WhatsApp SVG -->
+    <svg viewBox="0 0 24 24"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-1 1.1-.2.2-.4.2-.7.1-.3-.1-1.2-.4-2.3-1.4-.9-.8-1.4-1.7-1.6-2-.2-.3 0-.5.1-.6.1-.1.3-.4.4-.6.1-.2.2-.3.3-.5.1-.2 0-.4 0-.6 0-.1-.7-1.6-1-2.2-.3-.6-.5-.5-.7-.5h-.6c-.2 0-.6.1-.9.4-.3.3-1.2 1.2-1.2 3s1.2 3.5 1.4 3.7c.2.3 2.4 3.7 5.8 5 3.4 1.3 3.4.9 4 .9.6 0 2-.8 2.3-1.5.3-.7.3-1.3.2-1.4-.1-.1-.3-.2-.6-.3zM12.1 2C6.6 2 2.1 6.5 2.1 12c0 2 .5 3.8 1.5 5.5L2 22l4.7-1.5c1.6 1 3.5 1.6 5.4 1.6 5.5 0 9.9-4.5 9.9-10S17.6 2 12.1 2z"/></svg>
+    Ikuti Saluran
+  </button>
   
   <!-- Progress -->
   <div class="progress-info" id="progressText">Steps Completed 0/2</div>
-  <div class="progress-bar">
-    <div class="progress-fill" id="progressFill"></div>
-  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
 
   <!-- Login -->
   <button id="loginBtn" class="btn btn-disabled" disabled>Login</button>
@@ -136,14 +97,6 @@ function drawParticles(){
     ctx.beginPath();ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
     ctx.fillStyle="rgba(170,0,255,0.8)";ctx.fill();
   }
-  for(let i=0;i<particles.length;i++){
-    for(let j=i+1;j<particles.length;j++){
-      let dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
-      let dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<120){ctx.beginPath();ctx.strokeStyle="rgba(170,0,255,0.15)";
-        ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();}
-    }
-  }
 }
 function updateParticles(){
   for(let p of particles){p.x+=p.vx;p.y+=p.vy;
@@ -163,20 +116,21 @@ const progressFill=document.getElementById("progressFill");
 let steps=0;
 
 subBtn.addEventListener("click",()=>{
-  window.open("https://youtube.com/@thezyrex?si=ZchdFbwkII4eVFG8","_blank");
+  // buka pakai intent ke aplikasi YouTube
+  window.location.href="vnd.youtube://channel/UC_q4O-wQdUbZxVpWEi5RLAA";
   if(!subBtn.classList.contains("done")){
     subBtn.classList.add("done");
-    subBtn.innerHTML = '<i class="fas fa-check"></i> Subscribed';
+    subBtn.innerHTML = '✅ Subscribed';
     steps++;
     updateProgress();
   }
 });
 
 followBtn.addEventListener("click",()=>{
-  window.open("https://whatsapp.com/channel/0029VaPhjdlAjPXT6MFkR60s","_blank");
+  window.location.href="https://whatsapp.com/channel/0029VaPhjdlAjPXT6MFkR60s";
   if(!followBtn.classList.contains("done")){
     followBtn.classList.add("done");
-    followBtn.innerHTML = '<i class="fas fa-check"></i> Joined';
+    followBtn.innerHTML = '✅ Joined';
     steps++;
     updateProgress();
   }
