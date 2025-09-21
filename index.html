@@ -140,10 +140,18 @@ const progressFill=document.getElementById("progressFill");
 
 let steps=0;
 
+// Subscribe button → buka YouTube App atau fallback ke web dengan sub confirmation
 subBtn.addEventListener("click",()=>{
-  // buka aplikasi youtube langsung
-  window.location.href = "vnd.youtube://youtube.com/@thezyrex";
-  
+  const channelId = "UCmHZSjQ1M_Pcmt0pdSakJJQ"; // Channel ID kamu
+  const youtubeAppLink = `vnd.youtube://channel/${channelId}`;
+  const youtubeWebLink = `https://youtube.com/channel/${channelId}?sub_confirmation=1`;
+
+  window.location.href = youtubeAppLink;
+
+  setTimeout(()=>{
+    window.open(youtubeWebLink,"_system");
+  },1500);
+
   if(!subBtn.classList.contains("done")){
     subBtn.classList.add("done");
     subBtn.innerHTML = '<i class="fas fa-check"></i> Subscribed';
