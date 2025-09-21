@@ -13,90 +13,85 @@ body {
 }
 canvas {position:fixed;top:0;left:0;width:100%;height:100%;z-index:-1;}
 .card {
-  background:rgba(157,78,221,0.2);
-  border-radius:12px;
-  padding:25px;
-  box-shadow:0 4px 25px rgba(0,0,0,0.5);
-  max-width:360px;width:90%;box-sizing:border-box;
+  background:rgba(255,255,255,0.06);backdrop-filter:blur(15px);
+  border-radius:18px;padding:25px;
+  box-shadow:0 4px 25px rgba(128,0,255,0.35);
+  max-width:320px;width:85%;box-sizing:border-box;
   animation:fadeIn 1s ease;
 }
-.card img.icon {
-  width:80px;
-  margin-bottom:15px;
-  border-radius:50%;
-  border:2px solid #9d4edd;
+.profile {display:flex;justify-content:center;margin-bottom:15px;}
+.profile img {width:100px;height:100px;border-radius:50%;border:3px solid #9d4edd;}
+button {
+  width:95%;padding:10px;margin-top:10px;
+  border-radius:10px;border:none;cursor:pointer;
+  font-size:15px;background:#9d4edd;color:#fff;font-weight:600;
+  transition:background 0.3s;
 }
-h2 {
-  font-size:18px;
-  margin:10px 0 20px;
+button:hover { background:#b566ff; }
+footer {margin-top:15px;font-size:11px;opacity:0.6;}
+@keyframes fadeIn { from {opacity:0;transform:translateY(15px);} to {opacity:1;transform:translateY(0);} }
+
+/* Teks judul diubah menjadi 16px */
+.card h2 {
+  font-size:16px;
+  margin:17px 0;
 }
-.btn {
-  width:100%;
-  padding:12px;
-  border:none;
+
+/* Progress bar container */
+.progress-container {
+  width:95%;
+  height:10px;
+  background:rgba(255,255,255,0.2);
   border-radius:6px;
-  font-size:15px;
-  font-weight:600;
-  margin-top:10px;
-  cursor:pointer;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  transition:0.3s;
-}
-.btn i {font-size:18px;}
-.btn-red {background:#ff0000;color:#fff;}
-.btn-red:hover {background:#e60000;}
-.btn-green {background:#25d366;color:#fff;}
-.btn-green:hover {background:#1ebe57;}
-.btn-purple {background:#9d4edd;color:#fff;}
-.btn-disabled {background:#555 !important;color:#999 !important;cursor:not-allowed !important;}
-.btn.done {background:green !important;}
-.progress-info {margin:15px 0 5px;font-size:13px;opacity:0.9;}
-.progress-bar {
-  width:100%;
-  height:6px;
-  background:#333;
-  border-radius:3px;
   overflow:hidden;
+  margin:15px auto 0;
+  display:none;
+  opacity:1;
+  transition:opacity 0.5s ease;
 }
-.progress-fill {
+
+/* Progress bar fill */
+.progress-bar {
   height:100%;
   width:0%;
   background:#9d4edd;
-  transition:width 0.3s;
+  border-radius:6px;
+  transition:width 0.2s linear;
 }
-@keyframes fadeIn { from {opacity:0;transform:translateY(15px);} to {opacity:1;transform:translateY(0);} }
-footer {margin-top:15px;font-size:11px;opacity:0.6;}
+
+/* Teks Please Wait */
+.wait-text {
+  margin-top:8px;
+  font-size:14px;
+  color:#fff;
+  display:none;
+  opacity:1;
+  transition:opacity 0.5s ease;
+}
 </style>
-<script src="https://kit.fontawesome.com/3f48d10a3b.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <canvas id="particles"></canvas>
 
-<div class="card">
-  <img src="profile.jpg" alt="profil" class="icon">
-  <h2>Lengkapi Perintah Untuk Menggunakan Panel</h2>
-
-  <!-- Tombol -->
-  <button id="subBtn" class="btn btn-red"><i class="fab fa-youtube"></i> Subscribe Youtube</button>
-  <button id="followBtn" class="btn btn-green"><i class="fab fa-whatsapp"></i> Ikuti Saluran</button>
-  
-  <!-- Progress -->
-  <div class="progress-info" id="progressText">Steps Completed 0/2</div>
-  <div class="progress-bar">
-    <div class="progress-fill" id="progressFill"></div>
+<!-- Intro card -->
+<div class="card" id="introCard">
+  <div class="profile">
+    <img src="profile.jpg" alt="Profil">
   </div>
-
-  <!-- Login -->
-  <button id="loginBtn" class="btn btn-disabled" disabled>Login Panel</button>
+  <h2>Ikuti Saluran Sebelum Menggunakan Panel</h2>
+  <button id="okBtn">OK</button>
+  
+  <!-- Progress bar dan teks di bawah tombol -->
+  <div class="progress-container" id="progressContainer">
+    <div class="progress-bar" id="progressBar"></div>
+  </div>
+  <div class="wait-text" id="waitText">Please Wait</div>
 
   <footer>© 2025 The Zyrex. All rights reserved.</footer>
 </div>
 
 <script>
-/* Particles background */
+/* Particles */
 const canvas=document.getElementById("particles");
 const ctx=canvas.getContext("2d");
 let particles=[];
@@ -112,13 +107,13 @@ function drawParticles(){
   ctx.clearRect(0,0,canvas.width,canvas.height);
   for(let p of particles){
     ctx.beginPath();ctx.arc(p.x,p.y,p.radius,0,Math.PI*2);
-    ctx.fillStyle="rgba(157,78,221,0.8)";ctx.fill();
+    ctx.fillStyle="rgba(170,0,255,0.8)";ctx.fill();
   }
   for(let i=0;i<particles.length;i++){
     for(let j=i+1;j<particles.length;j++){
       let dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y;
       let dist=Math.sqrt(dx*dx+dy*dy);
-      if(dist<120){ctx.beginPath();ctx.strokeStyle="rgba(157,78,221,0.15)";
+      if(dist<120){ctx.beginPath();ctx.strokeStyle="rgba(170,0,255,0.15)";
         ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.stroke();}
     }
   }
@@ -131,59 +126,35 @@ function updateParticles(){
 function animate(){drawParticles();updateParticles();requestAnimationFrame(animate);}
 initParticles();animate();
 
-/* Button logic */
-const subBtn=document.getElementById("subBtn");
-const followBtn=document.getElementById("followBtn");
-const loginBtn=document.getElementById("loginBtn");
-const progressText=document.getElementById("progressText");
-const progressFill=document.getElementById("progressFill");
+/* Tombol intro dengan progress bar */
+const okBtn=document.getElementById("okBtn");
+const progressContainer=document.getElementById("progressContainer");
+const progressBar=document.getElementById("progressBar");
+const waitText=document.getElementById("waitText");
 
-let steps=0;
+okBtn.addEventListener("click",()=>{
+  progressContainer.style.display="block"; 
+  waitText.style.display="block"; 
 
-// Subscribe button → buka YouTube App atau fallback ke web dengan sub confirmation
-subBtn.addEventListener("click",()=>{
-  const channelId = "UCmHZSjQ1M_Pcmt0pdSakJJQ"; // Channel ID kamu
-  const youtubeAppLink = `vnd.youtube://channel/${channelId}`;
-  const youtubeWebLink = `https://youtube.com/channel/${channelId}?sub_confirmation=1`;
+  let progress=0;
+  const interval=setInterval(()=>{
+    progress+=10;
+    progressBar.style.width=progress+"%";
 
-  window.location.href = youtubeAppLink;
+    if(progress>=100){
+      clearInterval(interval);
 
-  setTimeout(()=>{
-    window.open(youtubeWebLink,"_system");
-  },1500);
+      // Fade out dulu
+      progressContainer.style.opacity="0";
+      waitText.style.opacity="0";
 
-  if(!subBtn.classList.contains("done")){
-    subBtn.classList.add("done");
-    subBtn.innerHTML = '<i class="fas fa-check"></i> Subscribed';
-    steps++;
-    updateProgress();
-  }
-});
-
-followBtn.addEventListener("click",()=>{
-  window.open("https://whatsapp.com/channel/0029VaPhjdlAjPXT6MFkR60s","_system");
-  if(!followBtn.classList.contains("done")){
-    followBtn.classList.add("done");
-    followBtn.innerHTML = '<i class="fas fa-check"></i> Joined';
-    steps++;
-    updateProgress();
-  }
-});
-
-function updateProgress(){
-  progressText.textContent=`Steps Completed ${steps}/2`;
-  progressFill.style.width=(steps/2*100)+"%";
-  if(steps>=2){
-    loginBtn.disabled=false;
-    loginBtn.classList.remove("btn-disabled");
-    loginBtn.classList.add("btn-purple");
-  }
-}
-
-loginBtn.addEventListener("click",()=>{
-  if(!loginBtn.disabled){
-    window.open("https://whatsapp.com/channel/0029VaPhjdlAjPXT6MFkR60s","_system");
-  }
+      setTimeout(()=>{
+        progressContainer.style.display="none"; 
+        waitText.style.display="none"; 
+        window.location.href="https://whatsapp.com/channel/0029VaPhjdlAjPXT6MFkR60s";
+      },500); // tunggu animasi fade-out selesai
+    }
+  },100); // 100ms x 10 = 1 detik penuh progress
 });
 </script>
 </body>
